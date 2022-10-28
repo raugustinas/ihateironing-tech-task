@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {Provider as ReduxProvider} from 'react-redux';
 import {ThemeProvider} from 'styled-components/native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   useFlipper,
@@ -24,13 +25,15 @@ const App: FC = () => {
 
   return (
     <ReduxProvider store={store}>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer ref={navigationRef}>
-          <Tab.Navigator>
-            <Tab.Screen name="Home" component={HomeScreen} />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </ThemeProvider>
+      <SafeAreaProvider>
+        <ThemeProvider theme={theme}>
+          <NavigationContainer ref={navigationRef}>
+            <Tab.Navigator>
+              <Tab.Screen name="Home" component={HomeScreen} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </ThemeProvider>
+      </SafeAreaProvider>
     </ReduxProvider>
   );
 };
