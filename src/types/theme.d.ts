@@ -17,6 +17,7 @@ declare module 'styled-components/native' {
     colors: {
       primary: string;
       black: string;
+      white: string;
     };
   }
 }

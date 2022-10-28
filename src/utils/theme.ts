@@ -21,6 +21,7 @@ const typography = {
 const colors = {
   primary: '#007EEC',
   black: '#2F384E',
+  white: '#FFFFFF',
 };
 
 const theme: DefaultTheme = {
