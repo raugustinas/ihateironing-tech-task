@@ -1,16 +1,22 @@
 import React, {FC, useEffect} from 'react';
-import {SafeAreaView} from 'react-native';
+import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, waitForPersistor} from '@/redux/store';
-import {AppState} from '@/redux/models/app';
-import {useFetch} from '@/hooks/useFetch';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {Item} from '@/types/types';
+import {useFetch} from '@/hooks/useFetch';
+import Loading from '@/components/loading';
+import {AppState} from '@/redux/models/app';
+
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
 
 const HomeScreen: FC = () => {
   const dispatch = useDispatch();
   const {ready} = useSelector<RootState, AppState>(({app}) => app);
 
-  const {data, loading, error} = useFetch<Item>('/items');
+  const {data, loading} = useFetch<Item>('/items');
 
   useEffect(() => {
     async function init() {
@@ -20,11 +26,11 @@ const HomeScreen: FC = () => {
     init();
   }, []);
 
-  if (!ready) {
-    return null;
+  if (!ready || loading) {
+    return <Loading />;
   }
 
-  return <SafeAreaView />;
+  return <Container />;
 };
 
 export default HomeScreen;

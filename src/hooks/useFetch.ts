@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 import Config from 'react-native-config';
 
 export const useFetch = <TData>(endpoint: string) => {
   const [data, setData] = useState<TData[]>([]);
-  const [error, setError] = useState<String | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -12,14 +12,13 @@ export const useFetch = <TData>(endpoint: string) => {
         setLoading(true);
         const response = await fetch(Config.API_BASE_URL + endpoint);
         if (response?.ok) {
-          const json = await response.json();
-          setError(undefined);
+          const json = await response?.json();
           setData(json);
         } else {
-          setError('Network request failed');
+          Alert.alert('Error', 'Network request failed');
         }
       } catch (e) {
-        setError(String(e));
+        console.log('[useFetch]', e);
       } finally {
         setLoading(false);
       }
@@ -28,5 +27,5 @@ export const useFetch = <TData>(endpoint: string) => {
     fetchData();
   }, [endpoint]);
 
-  return {data, loading, error};
+  return {data, loading};
 };
