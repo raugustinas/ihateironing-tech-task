@@ -52,17 +52,15 @@ interface Props {
   onPress?: (item?: Item) => void;
 }
 
-const HomeListItem: FC<Props> = ({item, onPress}) => {
-  return (
-    <Container onPress={() => onPress?.(item)}>
-      <ItemImage source={{uri: item?.image}} />
-      <TextContainer>
-        <TitleText>{item?.name}</TitleText>
-        <PriceText>{`$${item?.price}`}</PriceText>
-      </TextContainer>
-      <ChevronImage />
-    </Container>
-  );
-};
+const HomeListItem: FC<Props> = ({item, onPress}) => (
+  <Container onPress={() => onPress?.(item)}>
+    <ItemImage source={{uri: item?.image}} />
+    <TextContainer>
+      <TitleText>{item?.name}</TitleText>
+      <PriceText>{`$${item?.price}`}</PriceText>
+    </TextContainer>
+    <ChevronImage />
+  </Container>
+);
 
 export default HomeListItem;

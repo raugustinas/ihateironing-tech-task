@@ -54,22 +54,20 @@ interface Props {
   onPress?: (item?: Item) => void;
 }
 
-const CartListItem: FC<Props> = ({item, onPress, onIncrement, onDecrement}) => {
-  return (
-    <Container onPress={() => onPress?.(item)}>
-      <ItemImage source={{uri: item?.image}} />
-      <TextContainer>
-        <TitleText>{item?.name}</TitleText>
-        <PriceText>{`$${item?.price}`}</PriceText>
-        <QuantitySelector
-          value={item?.quantity}
-          onIncrement={() => onIncrement(item)}
-          onDecrement={() => onDecrement(item)}
-        />
-      </TextContainer>
-      <ChevronImage />
-    </Container>
-  );
-};
+const CartListItem: FC<Props> = ({item, onPress, onIncrement, onDecrement}) => (
+  <Container onPress={() => onPress?.(item)}>
+    <ItemImage source={{uri: item?.image}} />
+    <TextContainer>
+      <TitleText>{item?.name}</TitleText>
+      <PriceText>{`$${item?.price}`}</PriceText>
+      <QuantitySelector
+        value={item?.quantity}
+        onIncrement={() => onIncrement(item)}
+        onDecrement={() => onDecrement(item)}
+      />
+    </TextContainer>
+    <ChevronImage />
+  </Container>
+);
 
 export default CartListItem;
