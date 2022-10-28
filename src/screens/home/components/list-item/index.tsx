@@ -54,7 +54,7 @@ interface Props {
 
 const HomeListItem: FC<Props> = ({item, onPress}) => {
   return (
-    <Container onPress={onPress}>
+    <Container onPress={() => onPress?.(item)}>
       <ItemImage source={{uri: item?.image}} />
       <TextContainer>
         <TitleText>{item?.name}</TitleText>

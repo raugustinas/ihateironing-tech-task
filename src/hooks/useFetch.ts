@@ -3,7 +3,7 @@ import {Alert} from 'react-native';
 import Config from 'react-native-config';
 
 export const useFetch = <TData>(endpoint: string) => {
-  const [data, setData] = useState<TData[]>([]);
+  const [data, setData] = useState<TData>();
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
