@@ -33,31 +33,26 @@ const TextStyled = styled(Text).attrs({
 `;
 
 interface Props extends ViewStyle {
-  value: number;
-  onChange: (value: number) => void;
+  value?: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
 }
 
-const QuantitySelector: FC<Props> = ({value, onChange, ...props}) => {
-  const handleIncrease = () => {
-    onChange(value + 1);
-  };
+const QuantitySelector: FC<Props> = ({
+  value,
+  onIncrement,
+  onDecrement,
+  ...props
+}) => (
+  <Container {...props}>
+    <ButtonRoundStyled disabled={value === 0} onPress={onDecrement}>
+      <ImageStyled source={MinusIcon} />
+    </ButtonRoundStyled>
+    <TextStyled>{value}</TextStyled>
+    <ButtonRoundStyled onPress={onIncrement}>
+      <ImageStyled source={PlusIcon} />
+    </ButtonRoundStyled>
+  </Container>
+);
 
-  const handleDecrease = () => {
-    if (value > 1) {
-      onChange(value - 1);
-    }
-  };
-
-  return (
-    <Container {...props}>
-      <ButtonRoundStyled disabled={value === 0} onPress={handleDecrease}>
-        <ImageStyled source={MinusIcon} />
-      </ButtonRoundStyled>
-      <TextStyled>{value}</TextStyled>
-      <ButtonRoundStyled onPress={handleIncrease}>
-        <ImageStyled source={PlusIcon} />
-      </ButtonRoundStyled>
-    </Container>
-  );
-};
 export default QuantitySelector;

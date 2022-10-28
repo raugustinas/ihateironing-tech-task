@@ -59,7 +59,7 @@ const DetailsScreen: FC<Props> = ({id}) => {
   const {data, loading} = useFetch<Item>(`/items/${id}`);
 
   const handleBuyPress = () => {
-    cart.addToCart(data);
+    cart?.incrementQuantity(data);
     Alert.alert('Thank you!', 'Item added to cart!');
   };
 

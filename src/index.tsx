@@ -28,7 +28,11 @@ const TabStackScreen = () => {
       <Tab.Screen
         name="Cart"
         component={CartScreen}
-        options={{tabBarBadge: items?.length}}
+        options={{
+          ...(Object.keys(items)?.length > 0 && {
+            tabBarBadge: Object.keys(items)?.length,
+          }),
+        }}
       />
     </Tab.Navigator>
   );
