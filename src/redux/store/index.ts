@@ -4,14 +4,14 @@ import selectPlugin from '@rematch/select';
 import persistPlugin, {getPersistor} from '@rematch/persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import loadingPlugin, {ExtraModelsFromLoading} from '@rematch/loading';
+import {models, RootModel} from '@/redux/models';
+import Reactotron from '@/utils/reactotron';
 import {
   init,
   InitConfigRedux,
   RematchDispatch,
   RematchRootState,
 } from '@rematch/core';
-import {models, RootModel} from '@/redux/models';
-import Reactotron from '@/utils/reactotron';
 
 const redux: InitConfigRedux = {
   middlewares: [],
@@ -32,7 +32,7 @@ const store = init<RootModel, ExtraModelsFromLoading<RootModel>>({
     persistPlugin({
       key: 'tech-task-perist-storage',
       storage: AsyncStorage,
-      whitelist: [],
+      whitelist: ['cart'],
     }),
   ],
   redux,
