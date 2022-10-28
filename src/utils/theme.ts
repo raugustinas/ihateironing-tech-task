@@ -6,10 +6,21 @@ const typography = {
     fontSize: 24,
     lineHeight: 26,
   },
+  label1: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 16,
+    lineHeight: 18,
+  },
+  label2: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 14,
+    lineHeight: 16,
+  },
 };
 
 const colors = {
-  primary: '#FCCD34',
+  primary: '#007EEC',
+  black: '#2F384E',
 };
 
 const theme: DefaultTheme = {
