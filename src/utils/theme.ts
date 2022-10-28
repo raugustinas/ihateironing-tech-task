@@ -4,17 +4,17 @@ const typography = {
   h1: {
     fontFamily: 'Poppins-Bold',
     fontSize: 24,
-    lineHeight: 26,
+    lineHeight: 28,
   },
   label1: {
     fontFamily: 'Poppins-Medium',
     fontSize: 16,
-    lineHeight: 18,
+    lineHeight: 22,
   },
   label2: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: 14,
-    lineHeight: 16,
+    lineHeight: 20,
   },
 };
 

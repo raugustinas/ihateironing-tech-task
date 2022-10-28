@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import {Provider as ReduxProvider} from 'react-redux';
 import {ThemeProvider} from 'styled-components/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Provider as ReduxProvider, useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   useFlipper,
   useReduxDevToolsExtension,
@@ -13,21 +13,28 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import theme from '@/utils/theme';
-import store from '@/redux/store';
 import HomeScreen from '@/screens/home';
+import CartScreen from '@/screens/cart';
 import DetailsScreen from '@/screens/details';
+import {CartState} from '@/redux/models/cart';
+import store, {RootState} from '@/redux/store';
 
 const Tab = createBottomTabNavigator();
 const TabStackScreen = () => {
+  const {items} = useSelector<RootState, CartState>(({cart}) => cart);
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Cart" component={HomeScreen} />
+      <Tab.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{tabBarBadge: items?.length}}
+      />
     </Tab.Navigator>
   );
 };
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const App: FC = () => {
   const navigationRef = useNavigationContainerRef();
 
@@ -39,7 +46,7 @@ const App: FC = () => {
       <SafeAreaProvider>
         <ThemeProvider theme={theme}>
           <NavigationContainer ref={navigationRef}>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{orientation: 'portrait_up'}}>
               <Stack.Screen
                 name="Root"
                 component={TabStackScreen}
