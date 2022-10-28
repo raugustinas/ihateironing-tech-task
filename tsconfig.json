@@ -8,6 +8,7 @@
     },
     "types": [
       "jest",
+      "styled-components-react-native"
     ],
     "jsx": "react-native",
     "skipLibCheck": true

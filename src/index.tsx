@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {Provider as ReduxProvider} from 'react-redux';
+import {ThemeProvider} from 'styled-components/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   useFlipper,
@@ -9,6 +10,7 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
+import theme from '@/utils/theme';
 import store from '@/redux/store';
 import HomeScreen from '@/screens/home';
 
@@ -22,11 +24,13 @@ const App: FC = () => {
 
   return (
     <ReduxProvider store={store}>
-      <NavigationContainer ref={navigationRef}>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer ref={navigationRef}>
+          <Tab.Navigator>
+            <Tab.Screen name="Home" component={HomeScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
     </ReduxProvider>
   );
 };
