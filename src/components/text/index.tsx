@@ -12,8 +12,8 @@ interface TextProps extends Partial<RNTextProps> {
   color: Color;
 }
 
-const Text: FC<TextProps> = ({type, style, ...props}, ref) => (
-  <TextStyled ref={ref} style={[theme?.typography?.[type], style]} {...props} />
+const Text: FC<TextProps> = ({type, style, ...props}) => (
+  <TextStyled style={[theme?.typography?.[type], style]} {...props} />
 );
 
 export default Text;
