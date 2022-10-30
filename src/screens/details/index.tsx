@@ -1,12 +1,13 @@
 import React, {FC} from 'react';
+import {useQuery} from 'react-query';
 import {useDispatch} from 'react-redux';
-import {Alert, ScrollView} from 'react-native';
+import Config from 'react-native-config';
 import styled from 'styled-components/native';
+import {Alert, ScrollView} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Item} from '@/types/types';
 import Text from '@/components/text';
-import {useFetch} from '@/hooks/useFetch';
 import Loading from '@/components/loading';
 import {Button} from '@/components/button';
 import {DefaultNavigationProps} from '@/types/navigation';
@@ -56,14 +57,19 @@ interface Props {
 
 const DetailsScreen: FC<Props> = ({id}) => {
   const {cart} = useDispatch();
-  const {data, loading} = useFetch<Item>(`/items/${id}`);
+
+  const {isLoading, data} = useQuery<Item, Error>(
+    'item',
+    () => fetch(Config.API_BASE_URL + `/items/${id}`).then(res => res.json()),
+    {onError: error => Alert.alert('Error', error.message)},
+  );
 
   const handleBuyPress = () => {
     cart?.incrementQuantity(data);
     Alert.alert('Thank you!', 'Item added to cart!');
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
   }
 

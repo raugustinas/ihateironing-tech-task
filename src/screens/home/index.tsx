@@ -1,10 +1,11 @@
+import {useQuery} from 'react-query';
+import Config from 'react-native-config';
 import React, {FC, useEffect} from 'react';
-import {FlatList} from 'react-native';
+import {Alert, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, waitForPersistor} from '@/redux/store';
 import {Item} from '@/types/types';
-import {useFetch} from '@/hooks/useFetch';
 import Loading from '@/components/loading';
 import {AppState} from '@/redux/models/app';
 import {DefaultNavigationProps} from '@/types/navigation';
@@ -31,7 +32,12 @@ interface Props {
 const HomeScreen: FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const {ready} = useSelector<RootState, AppState>(({app}) => app);
-  const {data, loading} = useFetch<Item[]>('/items');
+
+  const {isLoading, data} = useQuery<Item[], Error>(
+    'items',
+    () => fetch(Config.API_BASE_URL + '/items').then(res => res.json()),
+    {onError: error => Alert.alert('Error', error.message)},
+  );
 
   useEffect(() => {
     async function init() {
@@ -45,7 +51,7 @@ const HomeScreen: FC<Props> = ({navigation}) => {
     navigation?.navigate('Details', {id: item?.id});
   };
 
-  if (!ready || loading) {
+  if (!ready || isLoading) {
     return <Loading />;
   }
 

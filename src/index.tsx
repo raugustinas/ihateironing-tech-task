@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {ThemeProvider} from 'styled-components/native';
+import {QueryClient, QueryClientProvider} from 'react-query';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider as ReduxProvider, useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -18,6 +19,8 @@ import CartScreen from '@/screens/cart';
 import DetailsScreen from '@/screens/details';
 import {CartState} from '@/redux/models/cart';
 import store, {RootState} from '@/redux/store';
+
+const queryClient = new QueryClient();
 
 const Tab = createBottomTabNavigator();
 const TabStackScreen = () => {
@@ -46,22 +49,24 @@ const App: FC = () => {
   useFlipper(navigationRef);
 
   return (
-    <ReduxProvider store={store}>
-      <SafeAreaProvider>
-        <ThemeProvider theme={theme}>
-          <NavigationContainer ref={navigationRef}>
-            <Stack.Navigator screenOptions={{orientation: 'portrait_up'}}>
-              <Stack.Screen
-                name="Root"
-                component={TabStackScreen}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen name="Details" component={DetailsScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </ThemeProvider>
-      </SafeAreaProvider>
-    </ReduxProvider>
+    <QueryClientProvider client={queryClient}>
+      <ReduxProvider store={store}>
+        <SafeAreaProvider>
+          <ThemeProvider theme={theme}>
+            <NavigationContainer ref={navigationRef}>
+              <Stack.Navigator screenOptions={{orientation: 'portrait_up'}}>
+                <Stack.Screen
+                  name="Root"
+                  component={TabStackScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen name="Details" component={DetailsScreen} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </ThemeProvider>
+        </SafeAreaProvider>
+      </ReduxProvider>
+    </QueryClientProvider>
   );
 };
 
